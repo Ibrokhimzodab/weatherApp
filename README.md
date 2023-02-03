@@ -7,6 +7,16 @@ All endpoints excepting "/login", "/register" should be send with auth header Be
 
 Refresh token should be send to "/refreshToken" with header "refreshToken"
 
+Change credentials to database before running project data will create automatically
+
+ROOT user credentials:
+
+    email: root@gmail.com  password: 12345Qa!
+
+User credentials:
+
+    email: user@gmail.com  password: 12345Qa!
+
 Common endpoints:
 
     POST /login (login)
