@@ -36,7 +36,7 @@ public class RootController {
     }
 
     @PutMapping("/users/{userId}")
-    public Mono<ResponseEntity<UserEntity>> editUser(@PathVariable String userId, @RequestBody @Valid EditUserModel model){
+    public Mono<ResponseEntity<UserResponseModel>> editUser(@PathVariable String userId, @RequestBody @Valid EditUserModel model){
         return weatherService.editUser(userId, model).map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.badRequest().build());
     }

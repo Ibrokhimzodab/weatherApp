@@ -24,8 +24,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Mono<ResponseEntity<UserEntity>> registerUser(@RequestBody @Valid RegisterUserModel registerUserModel){
-        return weatherService.registerUser(registerUserModel).map(ResponseEntity::ok);
+    public Mono<ResponseEntity<Void>> registerUser(@RequestBody @Valid RegisterUserModel registerUserModel){
+        return weatherService.registerUser(registerUserModel).map( r -> ResponseEntity.noContent().<Void>build())
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/refreshToken")

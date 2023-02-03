@@ -158,12 +158,22 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public Mono<UserEntity> editUser(String userId, EditUserModel model) {
+    public Mono<UserResponseModel> editUser(String userId, EditUserModel model) {
         return usersRepository.findById(userId).flatMap(user -> {
             user.setFirstName(model.getFirstName());
             user.setLastName(model.getLastName());
             user.setIsActive(model.getIsActive());
-            return usersRepository.save(user);
+            return usersRepository.save(user).flatMap(savedUser -> {
+                var userModel = new UserResponseModel();
+                userModel.setId(savedUser.getId());
+                userModel.setEmail(savedUser.getEmail());
+                userModel.setFirstName(savedUser.getFirstName());
+                userModel.setLastName(savedUser.getLastName());
+                userModel.setUserRole(savedUser.getUserRole());
+                userModel.setIsActive(savedUser.getIsActive());
+                userModel.setCreatedAt(savedUser.getCreatedAt());
+                return Mono.just(userModel);
+            });
         });
     }
 
